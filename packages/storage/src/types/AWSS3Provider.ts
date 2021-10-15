@@ -12,13 +12,17 @@ type ListObjectsCommandOutputContent = _Object;
 
 export type CommonStorageOptions = Omit<
 	StorageOptions,
-	'credentials' | 'region' | 'bucket' | 'dangerouslyConnectToHttpEndpointForTesting'
+	| 'credentials'
+	| 'region'
+	| 'bucket'
+	| 'dangerouslyConnectToHttpEndpointForTesting'
 >;
 
 export type S3ProviderGetConfig = CommonStorageOptions & {
 	download?: boolean;
 	track?: boolean;
 	expires?: number;
+	signingDate?: number | string | Date;
 	provider?: 'AWSS3';
 	identityId?: string;
 	progressCallback?: (progress: any) => any;
@@ -32,7 +36,9 @@ export type S3ProviderGetConfig = CommonStorageOptions & {
 	SSECustomerKeyMD5?: GetObjectRequest['SSECustomerKeyMD5'];
 };
 
-export type S3ProviderGetOuput<T> = T extends { download: true } ? GetObjectCommandOutput : string;
+export type S3ProviderGetOuput<T> = T extends { download: true }
+	? GetObjectCommandOutput
+	: string;
 
 export type S3ProviderPutConfig = CommonStorageOptions & {
 	progressCallback?: (progress: any) => any;
@@ -59,7 +65,10 @@ export interface S3ProviderPutOutput {
 	key: string;
 }
 
-export type S3ProviderRemoveConfig = CommonStorageOptions & { bucket?: string; provider?: 'AWSS3' };
+export type S3ProviderRemoveConfig = CommonStorageOptions & {
+	bucket?: string;
+	provider?: 'AWSS3';
+};
 
 export type S3ProviderRemoveOutput = DeleteObjectCommandOutput;
 
